@@ -72,6 +72,7 @@ angular.module('ng-walkthrough', [])
                 isRound: '=?',
                 hasGlow: '=?',
                 useButton: '=?',
+                buttonText: '=?',
                 iconPaddingLeft: '@?',
                 iconPaddingTop: '@?',
                 /**
@@ -246,7 +247,7 @@ angular.module('ng-walkthrough', [])
                         scope.closeIcon = close_icon;
                     },100);
                     scope.walkthroughIcon = getIcon(scope.icon);
-                    scope.buttonCaption = BUTTON_CAPTION_DONE;
+                    scope.buttonCaption = scope.buttonText || BUTTON_CAPTION_DONE;
 
                     // Change focusElementId in selector if needed
                     if(!attrs.focusElementSelector && attrs.focusElementId) {
