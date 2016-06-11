@@ -77,10 +77,11 @@ angular.module('ng-walkthrough', [])
                 /**
                  * @deprecated Since version 0.3.1. Will be deleted in next versions. Use property forceCaptionLocation instead.
                  */
-                tipLocation: '@?',
-                tipIconLocation: '@?',
-                tipColor: '@?',
+                tipLocation: '@',
+                tipIconLocation: '@',
+                tipColor: '@',
                 isBindClickEventToBody: '=?',
+                isScrollDisabled: '=',
                 onWalkthroughShow: '&',
                 onWalkthroughHide: '&'
             },
@@ -185,6 +186,14 @@ angular.module('ng-walkthrough', [])
 
                 var unbindScreenResize = function(){
                     angular.element($window).off('resize', resizeHandler);
+                };
+
+                var disableScroll = function(){
+                    angular.element(document.body).addClass('walkthrough-lock-scroll');
+                };
+
+                var enableScroll = function(){
+                    angular.element(document.body).removeClass('walkthrough-lock-scroll');
                 };
 
                 var init = function(scope){
@@ -514,6 +523,9 @@ angular.module('ng-walkthrough', [])
                         if (scope.isBindClickEventToBody){
                             bindClickEvents();
                         }
+                        if (scope.isScrollDisabled) {
+                            disableScroll();
+                        }
                         //if (!scope.hasTransclude){//remarked cause did not focus on search field in recipe select
                         try {
                             if (attrs.focusElementSelector) {
@@ -532,6 +544,7 @@ angular.module('ng-walkthrough', [])
                         scope.onWalkthroughShow();
                     } else{
                         unbindScreenResize();
+                        enableScroll();
                     }
                 });
 
